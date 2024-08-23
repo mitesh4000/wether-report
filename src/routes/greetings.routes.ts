@@ -51,4 +51,23 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/wether", async (req, res) => {
+  try {
+    const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+
+    const response = await axios.get<LocationData>(
+      `https://ipinfo.io/${ip}?token=${process.env.IPINFO_API_KEY}`
+    );
+
+    const currentHour = moment.tz(response.data.timezone).format("HH");
+    console.log("🚀 ~ router.get ~ currentHour:", currentHour);
+    const greeting = getGreeting(parseInt(currentHour));
+
+    return res.send({ data: greeting });
+  } catch (error) {
+    console.error("Error fetching location data:", error);
+    return res.status(500).send("Unable to retrieve location data");
+  }
+});
+
 export default router;

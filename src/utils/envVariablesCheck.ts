@@ -16,6 +16,11 @@ function checkEnvironmentVariables() {
     throw new Error(`BASE_API_URL is required.`);
   }
 
+  if (!process.env.IPINFO_API_KEY) {
+    console.error(`Error: IPINFO_API_KEY is not provided.`);
+    throw new Error(`IPINFO_API_KEY is required.`);
+  }
+
   console.log("All required environment variables are set.");
 }
 

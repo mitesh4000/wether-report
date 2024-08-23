@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container-sm">
+      <div
+        class="d-flex flex-column border p-3 justify-content-center align-items-center"
+        style="height: 99vh"
+      >
+        <h2 class="md-12 bg-light p-3 br-3">add new location</h2>
+        <hr />
+        <form id="weather-form">
+          <div class="mb-4">
+            <label for="latitude" class="form-label">Latitude</label>
+            <input
+              type="text"
+              class="form-control"
+              id="latitude"
+              name="latitude"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="longitude" class="form-label">Longitude</label>
+            <input
+              type="text"
+              class="form-control"
+              id="longitude"
+              name="longitude"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="location-name" class="form-label">location name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="location-name"
+              name="location-name"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      const form = document.querySelector("#weather-form");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const latitude = document.querySelector("#latitude").value;
+        const longitude = document.querySelector("#longitude").value;
+        const locationName = document.querySelector("#location-name").value;
+        const data = { latitude, longitude, locationName };
+        fetch("/api/location", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then(() => (window.location.href = "/"))
+          .catch((error) => console.error(error));
+      });
+    </script>
+  </body>
+</html>

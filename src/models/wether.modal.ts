@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 const weatherSchema = new mongoose.Schema({
   time: { type: Date, required: true },
+  location: { latitude: Number, longitude: Number },
+  locationName: String,
   values: {
     cloudBaseAvg: Number,
     cloudBaseMax: Number,
