@@ -25,6 +25,7 @@ connectToDb();
 
 cron.schedule(process.env.CRON_SHEDULE, () => {
   console.log("Running scheduled task at midnight...");
+  updateWetherData();
 });
 
 app.set("view engine", "ejs");
@@ -55,3 +56,6 @@ app.use(`${base_url}/location`, locationRouts);
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
+function updateWetherData() {
+  throw new Error("Function not implemented.");
+}
