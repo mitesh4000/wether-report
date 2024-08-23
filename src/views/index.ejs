@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <h1><%= message %></h1>
+    <p id="greeting"></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Temperature</th>
+          <th>Description</th>
+          <th>Humidity</th>
+          <th>Wind Speed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>2024-08-23</td>
+          <td>25°C</td>
+          <td>Sunny</td>
+          <td>60%</td>
+          <td>15 km/h</td>
+        </tr>
+        <tr>
+          <td>2024-08-24</td>
+          <td>22°C</td>
+          <td>Partly Cloudy</td>
+          <td>65%</td>
+          <td>10 km/h</td>
+        </tr>
+        <tr>
+          <td>2024-08-25</td>
+          <td>20°C</td>
+          <td>Rainy</td>
+          <td>80%</td>
+          <td>20 km/h</td>
+        </tr>
+        <tr>
+          <td>2024-08-26</td>
+          <td>23°C</td>
+          <td>Clear</td>
+          <td>55%</td>
+          <td>12 km/h</td>
+        </tr>
+        <tr>
+          <td>2024-08-27</td>
+          <td>24°C</td>
+          <td>Cloudy</td>
+          <td>70%</td>
+          <td>18 km/h</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const apiBaseUrl = "<%= greetingsApi%>";
+      fetch(`${apiBaseUrl}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return res.json();
+        })
+        .then((res) => {
+          const textNode = document.querySelector("#greeting");
+          console.log(res);
+          textNode.textContent = res.data;
+        })
+        .catch((error) => {
+          console.error("There was a problem with the fetch operation:", error);
+        });
+    });
+  </script>
+</html>
