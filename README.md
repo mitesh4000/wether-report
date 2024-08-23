@@ -3,9 +3,8 @@ hellow dear examinier here is my assignment
 you can checkout the demo of assignment here
 http://mitesh4000.in:3000/
 
-| Endpoint               | Method | Description                                                                                                                              |
-| ---------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| /locations             | GET    | Returns a list of all saved locations.                                                                                                   |
-| /locations             | POST   | Adds a new location to the database. The request body should be a JSON object with the following properties: `latitude` and `longitude`. |
-| /weather               | GET    | Returns the weather forecast for all saved locations.                                                                                    |
-| /weather/:locationName | GET    | Returns the weather forecast for a specific location. Replace `:locationName` with the name of the location.                             |
+| Endpoint   | Method | Description                                                                                                                                                   |
+| ---------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| /greetings | GET    | fetch the lattitude and longitude from the ip of http request and send greetings acording to the time zone                                                    |
+| /wether    | GET    | fetch wether data from database categorise acording to locations and send send formated data in response                                                      |
+| /locations | POST   | take lattitude and longitude as input and store it in the database and at the time of save it also fetch the wether data of next 5 days and store in database |     |
