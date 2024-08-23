@@ -43,9 +43,7 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const apiBaseUrl = "<%= greetingsApi%>";
-      const wetherApiUrl = "<%= WetherForcastAPI%>";
-      fetch(`${apiBaseUrl}`)
+      fetch(`/api/greetings`)
         .then((res) => {
           if (!res.ok) {
             throw new Error("Network response was not ok");
@@ -60,7 +58,7 @@
           console.error("There was a problem with the fetch operation:", error);
         });
 
-      fetch(`${wetherApiUrl}`)
+      fetch(`/api/wether`)
         .then((res) => {
           if (!res.ok) {
             throw new Error("Network response was not ok");

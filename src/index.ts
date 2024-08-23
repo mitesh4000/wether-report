@@ -11,8 +11,8 @@ import locationRouts from "./routes/location.routes";
 import connectToDb from "./utils/connectToDb";
 
 import checkEnvironmentVariables from "./utils/envVariablesCheck";
-const cron = require("node-cron");
 dotenv.config();
+const cron = require("node-cron");
 
 const app = express();
 
@@ -38,12 +38,6 @@ app.get("/", (req, res) => {
   res.render("index", {
     title: "Welcome to My Node.js App",
     message: "Hello, world!",
-    greetingsApi:
-      process.env.DEPLOYMENT_API_URL! +
-      process.env.BASE_API_URL! +
-      "/greetings",
-    WetherForcastAPI:
-      process.env.DEPLOYMENT_API_URL! + process.env.BASE_API_URL! + "/wether",
   });
 });
 
