@@ -14,8 +14,8 @@ const wether_routes_1 = __importDefault(require("./routes/wether.routes"));
 const location_routes_1 = __importDefault(require("./routes/location.routes"));
 const connectToDb_1 = __importDefault(require("./utils/connectToDb"));
 const envVariablesCheck_1 = __importDefault(require("./utils/envVariablesCheck"));
-const cron = require("node-cron");
 dotenv_1.default.config();
+const cron = require("node-cron");
 const app = (0, express_1.default)();
 (0, envVariablesCheck_1.default)();
 const port = process.env.PORT || 3000;
@@ -32,10 +32,6 @@ app.get("/", (req, res) => {
     res.render("index", {
         title: "Welcome to My Node.js App",
         message: "Hello, world!",
-        greetingsApi: process.env.DEPLOYMENT_API_URL +
-            process.env.BASE_API_URL +
-            "/greetings",
-        WetherForcastAPI: process.env.DEPLOYMENT_API_URL + process.env.BASE_API_URL + "/wether",
     });
 });
 app.get("/add-location", (req, res) => {
