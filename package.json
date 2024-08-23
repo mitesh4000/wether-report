@@ -5,7 +5,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx ts-node src/index.ts",
-    "dev": "nodemon --config nodemon.json src/index.ts"
+    "dev": "nodemon --config nodemon.json src/index.ts",
+    "build": "esbuild src/index.ts --bundle --outfile=out.js"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +36,7 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.0.0",
     "@types/nodemailer": "^6.4.15",
+    "esbuild": "0.23.1",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"

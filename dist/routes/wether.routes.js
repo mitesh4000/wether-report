@@ -13,13 +13,31 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const http_status_codes_1 = require("http-status-codes");
+const location_modal_1 = __importDefault(require("../models/location.modal"));
+const wether_modal_1 = __importDefault(require("../models/wether.modal"));
 const router = express_1.default.Router();
-const fatchData = () => __awaiter(void 0, void 0, void 0, function* () {
-    const url = "https://api.open-meteo.com/v1/forecast";
-});
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = yield fatchData();
-    res.status(http_status_codes_1.StatusCodes.ACCEPTED).json({ data: data });
+    try {
+        const locations = yield location_modal_1.default.find();
+        const data = [];
+        for (const location of locations) {
+            const weatherReport = yield wether_modal_1.default.find({
+                locationName: location.locationName,
+            })
+                .sort({ time: -1 })
+                .limit(5);
+            if (weatherReport.length !== 0) {
+                data.push({
+                    location: location.locationName,
+                    forecast: weatherReport,
+                });
+            }
+        }
+        res.json(data);
+    }
+    catch (error) {
+        console.error("Error fetching location data:", error);
+        return res.status(500).send("Unable to retrieve location data");
+    }
 }));
 exports.default = router;

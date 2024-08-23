@@ -13,36 +13,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const tasks_modal_1 = __importDefault(require("../models/tasks.modal"));
+const location_modal_1 = __importDefault(require("../models/location.modal"));
+const saveWetherForcast_1 = __importDefault(require("../utils/saveWetherForcast"));
 const router = express_1.default.Router();
-router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const tasks = yield tasks_modal_1.default.find();
-    res.json(tasks);
-}));
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const newtask = yield tasks_modal_1.default.create(req.body);
-        if (newtask) {
-            res.json({ data: newtask });
-        }
+        const { latitude, longitude, locationName } = req.body;
+        const newWeather = new location_modal_1.default({
+            latitude,
+            longitude,
+            locationName,
+        });
+        yield (0, saveWetherForcast_1.default)(latitude, longitude, locationName);
+        yield newWeather.save();
+        res
+            .status(201)
+            .json({ message: "Location added successfully", newWeather });
     }
     catch (error) {
-        res.json({ err: error });
-    }
-}));
-router.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { id } = req.params;
-        const updatedStatus = req.body.status;
-        const updatedTask = yield tasks_modal_1.default.findByIdAndUpdate(id, { status: updatedStatus }, { new: true });
-        if (!updatedTask) {
-            return res.status(404).json({ message: "Task not found" });
-        }
-        res.json(updatedTask);
-    }
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Internal server error" });
+        console.error("Error adding new location:", error);
+        res.status(500).send("Unable to add new location");
     }
 }));
 exports.default = router;
